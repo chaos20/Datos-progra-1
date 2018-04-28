@@ -1,11 +1,12 @@
 #ifndef TORTUGA_H
 #define TORTUGA_H
-#include <SDL2/SDL.h>
+#include <SDL.h>
+//#include <SDL2/SDL.h>
 #include <cmath>
 #include <stdexcept>
 #include "DLinkedList.h"
-#define DEFAULT_X 300
-#define DEFAULT_Y 240
+#define DEFAULT_X 500
+#define DEFAULT_Y 100
 #define DEFAULT_ANGLE 0
 
 using namespace std;
@@ -231,7 +232,7 @@ public:
             SDL_Window* window = NULL;
             SDL_Renderer* renderer = NULL;
 
-            if (SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer) == 0) {
+            if (SDL_CreateWindowAndRenderer(950, 700, 0, &window, &renderer) == 0) {
                 SDL_bool done = SDL_FALSE;
 
                 while (!done) {
@@ -245,8 +246,8 @@ public:
                         for(fractal->goToStart(); !fractal->atEnd(); fractal->next()){
                             if(fractal->getElement() == "A"){
                                 double angleRadians = (angle * M_PI) / 180;
-                                newX = (sin(angleRadians) * 40) + x;
-                                newY = (cos(angleRadians) * 40) + y;
+                                newX = (sin(angleRadians) * 20) + x;
+                                newY = (cos(angleRadians) * 20) + y;
                                 SDL_RenderDrawLine(renderer, x, y, newX, newY);
                                 SDL_RenderPresent(renderer);
                                 x = newX;
@@ -292,11 +293,6 @@ public:
                         }
                         finish = true;
                     }
-                    /*SDL_RenderDrawLine(renderer, 320, 200, 300, 240);
-                    SDL_RenderDrawLine(renderer, 300, 240, 340, 240);
-                    SDL_RenderDrawLine(renderer, 340, 240, 320, 200);*/
-                    SDL_RenderPresent(renderer);
-
                     while (SDL_PollEvent(&event)) {
                         if (event.type == SDL_QUIT) {
                             done = SDL_TRUE;
