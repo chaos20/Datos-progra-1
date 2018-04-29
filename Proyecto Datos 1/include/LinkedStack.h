@@ -1,6 +1,9 @@
 #ifndef LINKEDSTACK_H
 #define LINKEDSTACK_H
 #include "Node.h"
+#include <Stack.h>
+
+using namespace std;
 
 template<typename E>
 class LinkedStack : public Stack<E>{
@@ -50,7 +53,6 @@ public:
             delete temp;
         }
         size = 0;
-        //Se podria hacer un ciclo llamando a pop pero eso requiere mas recursos
     }
 
     bool isEmpty(){

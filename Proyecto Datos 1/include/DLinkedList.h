@@ -151,63 +151,6 @@ public:
         return *tail;
     }
 
-    /*void sort(){
-        DLinkedList<E> *minorNumers = new DLinkedList<E>();
-        DLinkedList<E> *greaterNumers = new DLinkedList<E>();
-        DNode<E> *pivot = tail->previous;
-        DNode<E> *aux = head->next;
-        while(aux->next != tail){
-            if(aux->element > pivot->element)
-                greaterNumers->append(aux->element);
-            else
-                minorNumers->append(aux->element);
-            aux = aux->next;
-        }
-        cout << endl << "Lista que se ordenara: " << printList() << endl;
-        cout << "Pivote: " << pivot->element << endl;
-        cout << "Menores al pivote: " << minorNumers->printList() << endl;
-        cout << "Mayores al pivote: " << greaterNumers->printList() << endl << endl;
-        if(minorNumers->getSize() > 1){
-            cout << "Se entro por recursion a la lista de menores" << endl << endl;
-            minorNumers->sort();
-            cout << "Se salio de la recursion y ahora se esta operando con esta lista: " << printList() << endl << endl;
-        }
-        if(greaterNumers->getSize() > 1){
-            cout << "Se entro por recursion a la lista de mayores" << endl << endl;
-            greaterNumers->sort();
-            cout << "Se salio de la recursion y ahora se esta operando con esta lista: " << printList() << endl << endl;
-        }
-        DNode<E> *valor = new DNode<E>(pivot->element);
-        clear();
-        cout << "La lista se vacio" << endl << endl;
-        if(minorNumers->getSize() > 0){
-            DNode<E> *auxMinor = minorNumers->head->next;
-            while(auxMinor != minorNumers->tail){
-                append(auxMinor->element);
-                auxMinor = auxMinor->next;
-            }
-            delete auxMinor;
-
-        }
-        cout << "Se insertaron los numeros menores (si es que habian) y ahora la lista esta asi: " << printList() << endl;
-        append(valor->element);
-        cout << "Se inserto el pivote y ahora la lista esta asi: " << printList() << endl;
-        if(greaterNumers->getSize() > 0){
-            DNode<E> *auxGreater = greaterNumers->head->next;
-            while(auxGreater != greaterNumers->tail){
-                append(auxGreater->element);
-                auxGreater = auxGreater->next;
-            }
-            delete auxGreater;
-        }
-        cout << "Se insertaron los numeros mayores (si es que habian) y ahora la lista esta asi: " << printList() << endl << endl;
-        delete minorNumers;
-        delete greaterNumers;
-        delete pivot;
-        delete aux;
-        delete valor;
-    }*/
-
     string getType(){
         return "LinkedList";
     }

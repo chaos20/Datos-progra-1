@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1524878300 source:c:\users\juanq\desktop\codeblocks\proyecto datos 1\main.cpp
+1524986136 source:c:\users\juanq\desktop\codeblocks\proyecto datos 1\main.cpp
 	<iostream>
 	"Tortuga.h"
-	<SDL2/SDL.h>
+	<SDL.h>
 
 1519922211 c:\users\juanq\desktop\sdl2-2.0.8\i686-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -338,22 +338,23 @@
 	"begin_code.h"
 	"close_code.h"
 
-1524884192 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\tortuga.h
-	<SDL2/SDL.h>
+1524986591 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\tortuga.h
+	<SDL.h>
 	<cmath>
 	<stdexcept>
 	"DLinkedList.h"
+	"LinkedStack.h"
 
-1524869146 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\dlinkedlist.h
+1524958141 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\dlinkedlist.h
 	<List.h>
 	<DNode.h>
 	<stdexcept>
 	<string>
 	<sstream>
 
-1524875182 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\list.h
+1524958141 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\list.h
 
-1524875182 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\dnode.h
+1524958141 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\dnode.h
 
 1524957953 source:c:\users\josef\desktop\github\datos-progra-1\proyecto datos 1\main.cpp
 	<iostream>
@@ -710,4 +711,12 @@
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
+
+1524970426 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\linkedstack.h
+	"Node.h"
+	<Stack.h>
+
+1524958141 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\node.h
+
+1524958141 c:\users\juanq\desktop\codeblocks\proyecto datos 1\include\stack.h
 

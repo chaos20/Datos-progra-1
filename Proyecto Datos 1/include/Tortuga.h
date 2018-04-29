@@ -1,12 +1,12 @@
 #ifndef TORTUGA_H
 #define TORTUGA_H
 #include <SDL.h>
-//#include <SDL2/SDL.h>
 #include <cmath>
 #include <stdexcept>
 #include "DLinkedList.h"
+#include "LinkedStack.h"
 #define DEFAULT_X 500
-#define DEFAULT_Y 100
+#define DEFAULT_Y 600
 #define DEFAULT_ANGLE 0
 
 using namespace std;
@@ -60,11 +60,14 @@ public:
             } while(curvaDeDragon->atEnd() == false);
             curvaDeDragon->append("A");
         }
+        setAngle(270);
+        setX(500);
+        setY(300);
         return curvaDeDragon;
     }
 
     DLinkedList<string>* flechaDeSierpinski(int iterations){
-        string curve = "30";
+        string curve = "60";
         DLinkedList<string> *flechaDeSierpinski = new DLinkedList<string>();
         for(int i = 0; i < iterations; i++){
             if(i == 0){
@@ -72,18 +75,18 @@ public:
                 flechaDeSierpinski->insert(curve);
             }else{
                 flechaDeSierpinski->goToStart();
-                if(curve == "30")
-                    curve = "-30";
+                if(curve == "60")
+                    curve = "-60";
                 else
-                    curve = "30";
+                    curve = "60";
                 do{
                     if(flechaDeSierpinski->getPos() % 3 == 0){
                         flechaDeSierpinski->insert(curve);
                         flechaDeSierpinski->insert(curve);
-                        if(curve == "30")
-                            curve = "-30";
+                        if(curve == "60")
+                            curve = "-60";
                         else
-                            curve = "30";
+                            curve = "60";
                     }
                     flechaDeSierpinski->next();
                 }while(flechaDeSierpinski->atEnd() == false);
@@ -101,6 +104,9 @@ public:
             } while(flechaDeSierpinski->atEnd() == false);
             flechaDeSierpinski->append("A");
         }
+        setAngle(90);
+        setX(500);
+        setY(450);
         return flechaDeSierpinski;
     }
 
@@ -130,6 +136,9 @@ public:
                 }while(curvaDeLevy->atEnd() == false);
             }
         }
+        setAngle(270);
+        setX(600);
+        setY(300);
         return curvaDeLevy;
     }
 
@@ -162,6 +171,9 @@ public:
                 }while(arbolBinario->atEnd() == false);
             }
         }
+        setAngle(180);
+        setX(500);
+        setY(600);
         return arbolBinario;
     }
 
@@ -177,7 +189,7 @@ public:
                         planta->remove();
                         planta->insert("A");
                         planta->next();
-                        planta->insert("D");
+                        planta->insert("25");
                         planta->next();
                         planta->insert("(");
                         planta->next();
@@ -187,19 +199,19 @@ public:
                         planta->next();
                         planta->insert(")");
                         planta->next();
-                        planta->insert("I");
+                        planta->insert("-25");
                         planta->next();
                         planta->insert("X");
                         planta->next();
                         planta->insert(")");
                         planta->next();
-                        planta->insert("I");
+                        planta->insert("-25");
                         planta->next();
                         planta->insert("A");
                         planta->next();
                         planta->insert("(");
                         planta->next();
-                        planta->insert("I");
+                        planta->insert("-25");
                         planta->next();
                         planta->insert("A");
                         planta->next();
@@ -207,7 +219,7 @@ public:
                         planta->next();
                         planta->insert(")");
                         planta->next();
-                        planta->insert("D");
+                        planta->insert("25");
                         planta->next();
                         planta->insert("X");
                     }else if(planta->getElement() == "A"){
@@ -220,19 +232,26 @@ public:
                 }while(planta->atEnd() == false);
             }
         }
+        setAngle(180);
+        setX(500);
+        setY(650);
         return planta;
     }
 
-    void draw(DLinkedList<string> *fractal){
+    void draw(DLinkedList<string> *fractal, bool isArbol = false){
         bool finish = false;
-        int newY;
-        int newX;
-        setAngle(0);
+        double newY;
+        double newX;
+        int fragmentSize = 5;
+        if(isArbol){
+            fragmentSize = 1;
+        }
+        LinkedStack<double> fractalStack;
         if (SDL_Init(SDL_INIT_VIDEO) == 0) {
             SDL_Window* window = NULL;
             SDL_Renderer* renderer = NULL;
 
-            if (SDL_CreateWindowAndRenderer(950, 700, 0, &window, &renderer) == 0) {
+            if (SDL_CreateWindowAndRenderer(1300, 700, 0, &window, &renderer) == 0) {
                 SDL_bool done = SDL_FALSE;
 
                 while (!done) {
@@ -244,52 +263,58 @@ public:
                     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
                     if(!finish){
                         for(fractal->goToStart(); !fractal->atEnd(); fractal->next()){
-                            if(fractal->getElement() == "A"){
+                            if(fractal->getElement() == "A" || fractal->getElement() == "R" || fractal->getElement() == "H"){
                                 double angleRadians = (angle * M_PI) / 180;
-                                newX = (sin(angleRadians) * 20) + x;
-                                newY = (cos(angleRadians) * 20) + y;
+                                newX = (sin(angleRadians) * fragmentSize) + x;
+                                newY = (cos(angleRadians) * fragmentSize) + y;
                                 SDL_RenderDrawLine(renderer, x, y, newX, newY);
                                 SDL_RenderPresent(renderer);
                                 x = newX;
                                 y = newY;
-                            }else if(fractal->getElement() == "90"){
-                                if(angle == 270){
-                                    angle = 0;
-                                }else{
-                                    angle = angle + 90;
+                            }else if(fractal->getElement() == "("){
+                                fractalStack.push(x);
+                                fractalStack.push(y);
+                                fractalStack.push(angle);
+                                if(isArbol){
+                                    if(angle - 45 < 0){
+                                        angle = 360 - ((angle - 45) * -1);
+                                    }else{
+                                        angle = angle - 45;
+                                    }
                                 }
-                            }else if(fractal->getElement() == "-90"){
-                                if(angle == 0){
-                                    angle = 270;
-                                }else{
-                                    angle = angle - 90;
+                            }else if(fractal->getElement() == ")"){
+                                setAngle(fractalStack.pop());
+                                setY(fractalStack.pop());
+                                setX(fractalStack.pop());
+                                if(isArbol){
+                                    if(angle + 45 > 360){
+                                        angle = (angle + 45) - 360;
+                                    }else if(angle + 45 == 360){
+                                        angle = 0;
+                                    }else{
+                                        angle = angle + 45;
+                                    }
                                 }
-                            }else if(fractal->getElement() == "30"){
-                                if(angle == 330){
-                                    angle = 0;
+                            }else if(fractal->getElement() == "X"){
+                            }else{
+                                string stringAngle = fractal->getElement();
+                                int intAngle = atoi(stringAngle.c_str());
+                                if(intAngle >= 0){
+                                    if(angle + intAngle == 360){
+                                        angle = 0;
+                                    }else if(angle + intAngle > 360){
+                                        angle = (angle + intAngle) - 360;
+                                    }else{
+                                        angle = angle + intAngle;
+                                    }
                                 }else{
-                                    angle = angle + 30;
-                                }
-                            }else if(fractal->getElement() == "-30"){
-                                if(angle == 0){
-                                    angle = 330;
-                                }else{
-                                    angle = angle - 30;
-                                }
-                            }else if(fractal->getElement() == "45"){
-                                if(angle == 315){
-                                    angle = 0;
-                                }else{
-                                    angle = angle + 45;
-                                }
-                            }else if(fractal->getElement() == "-45"){
-                                if(angle == 0){
-                                    angle = 315;
-                                }else{
-                                    angle = angle - 45;
+                                    if(angle + intAngle < 0){
+                                        angle = 360 - ((angle + intAngle) * -1);
+                                    }else{
+                                        angle = angle + intAngle;
+                                    }
                                 }
                             }
-
                         }
                         finish = true;
                     }
@@ -313,6 +338,14 @@ public:
 
     void setAngle(double pAngle){
         angle = pAngle;
+    }
+
+    void setX (double pX){
+        x = pX;
+    }
+
+    void setY (double pY){
+        y = pY;
     }
 };
 
